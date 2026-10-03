@@ -1,0 +1,9 @@
+---
+const links = [{href:'/',label:'Overview'},{href:'/solutions',label:'Solutions'},{href:'/work',label:'Our work'},{href:'/about',label:'About'}];
+const current = Astro.url.pathname;
+---
+<header class="site-header"><a class="brand" href="/" aria-label="OrbitOps home"><span class="brand-mark">O</span><span>orbit<span class="brand-light">ops</span></span></a><nav aria-label="Main navigation">{links.map(link=><a class:list={{active:current===link.href}} href={link.href}>{link.label}</a>)}</nav><a class="nav-cta" href="/contact">Let's talk <span>↗</span></a><button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button></header>
+<script>
+const toggle=document.querySelector('.menu-toggle'); const nav=document.querySelector('.site-header nav');
+toggle?.addEventListener('click',()=>{const open=nav?.classList.toggle('open');toggle.setAttribute('aria-expanded',String(!!open));});
+</script>

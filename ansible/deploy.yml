@@ -1,0 +1,32 @@
+---
+- name: Deploy OrbitOps website to the local Docker host
+  hosts: webservers
+  gather_facts: false
+  vars:
+    container_name: orbitops_web
+    image_name: "{{ docker_image | default('orbitops-web:latest') }}"
+    published_port: "{{ app_port | default('8080') }}"
+  tasks:
+    - name: Ensure the requested application image exists
+      community.docker.docker_image:
+        name: "{{ image_name }}"
+        source: local
+
+    - name: Replace the running OrbitOps container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ image_name }}"
+        state: started
+        recreate: true
+        restart_policy: unless-stopped
+        published_ports:
+          - "{{ published_port }}:80"
+        labels:
+          app: orbitops
+          managed_by: ansible
+        healthcheck:
+          test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null || exit 1"]
+          interval: 30s
+          timeout: 5s
+          retries: 3
+          start_period: 10s

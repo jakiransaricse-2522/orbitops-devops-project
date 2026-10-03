@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.env
+ansible/inventory.ini.bak
+.DS_Store
+*.log

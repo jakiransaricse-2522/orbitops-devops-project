@@ -1,0 +1,7 @@
+[webservers]
+# Replace with your deployment host. For a local test, use localhost and enable local connection.
+192.0.2.10 ansible_user=ubuntu
+
+# Local example:
+# [webservers]
+# localhost ansible_connection=local
